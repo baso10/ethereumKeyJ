@@ -49,6 +49,15 @@ public class TestWallet
     assertNotNull(newWAllet);
     assertNull(newWAllet.getPrivateKey());
     assertEquals("0x6f5b635F45b745AD2cb5FA42A986259f1A0534DF", newWAllet.getAddress());
+  }
 
+  @Test
+  public void testExistingPublicWallet()
+  {
+    Wallet newWAllet = Wallet.loadFromPublic("044ad5a1a3e2dabd706623fb6ff6e18ee36cfa6637596c7a170b93eac1e53b3470c382b97daa89bca30158ae7ab44455392c2263f81600122b42e0a5bdb4a8a03b");
+    assertNotNull(newWAllet);
+    assertNull(newWAllet.getPrivateKey());
+    assertEquals("044ad5a1a3e2dabd706623fb6ff6e18ee36cfa6637596c7a170b93eac1e53b3470c382b97daa89bca30158ae7ab44455392c2263f81600122b42e0a5bdb4a8a03b", newWAllet.getPublicKey());
+    assertEquals("0x25c3d13B45a91562d7E2582Df7E45A29337D1F23", newWAllet.getAddress());
   }
 }
