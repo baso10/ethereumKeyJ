@@ -39,7 +39,7 @@ public class Wallet
     byte[] pubKey = ecKey.getPubKey();
     byte[] privKeyBytes = ecKey.getPrivKeyBytes();
 
-    return new Wallet(ByteUtil.toChecksumHexString(address), ByteUtil.toHexString(pubKey), ByteUtil.toHexString(privKeyBytes));
+    return new Wallet("0x" + ByteUtil.toChecksumHexString(address), ByteUtil.toHexString(pubKey), ByteUtil.toHexString(privKeyBytes));
   }
 
   public static Wallet loadFromPrivate(String privateKey)

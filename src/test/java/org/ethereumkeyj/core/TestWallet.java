@@ -15,13 +15,18 @@
  */
 package org.ethereumkeyj.core;
 
+import java.util.regex.Pattern;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 public class TestWallet
 {
+
+  private static final Pattern hexPattern = Pattern.compile("^\\p{XDigit}+$");
 
   @Test
   public void testNewWallet()
@@ -31,6 +36,25 @@ public class TestWallet
     assertNotNull(newWAllet.getAddress());
     assertNotNull(newWAllet.getPrivateKey());
     assertNotNull(newWAllet.getPublicKey());
+
+    assertEquals(64, newWAllet.getPrivateKey().length());
+    assertFalse(newWAllet.getPrivateKey().startsWith("0x"));
+    assertTrue(hexPattern.matcher(newWAllet.getPrivateKey()).matches());
+
+    assertEquals(40, newWAllet.getAddress().substring(2).length());
+    assertTrue(newWAllet.getAddress().startsWith("0x"));
+    assertTrue(hexPattern.matcher(newWAllet.getAddress().substring(2)).matches());
+
+    assertEquals(130, newWAllet.getPublicKey().length());
+    assertFalse(newWAllet.getPublicKey().startsWith("0x"));
+    assertTrue(hexPattern.matcher(newWAllet.getPublicKey()).matches());
+
+    //recheck with loadFromPrivate
+    Wallet loadedWallet = Wallet.loadFromPrivate(newWAllet.getPrivateKey());
+    assertNotNull(loadedWallet);
+    assertEquals(newWAllet.getPrivateKey(), loadedWallet.getPrivateKey());
+    assertEquals(newWAllet.getAddress(), loadedWallet.getAddress());
+    assertEquals(newWAllet.getPublicKey(), loadedWallet.getPublicKey());
   }
 
   @Test
@@ -40,6 +64,7 @@ public class TestWallet
     assertNotNull(newWAllet);
     assertEquals("0c276dea6126fc41da8303d13f53fdbf4c5b69c8a0cbe8526a8f56483f1b51e5", newWAllet.getPrivateKey());
     assertEquals("0x6f5b635F45b745AD2cb5FA42A986259f1A0534DF", newWAllet.getAddress());
+    assertEquals("04d3bd3d61cd78318e94b141f4fbcab9af875f7eb7dac0e97d7245b3ecdf000282f040d1aef926c6cfa4687847ae03169f06ecddaa7833de668c08c7a91c19d886", newWAllet.getPublicKey());
   }
 
   @Test
@@ -54,10 +79,10 @@ public class TestWallet
   @Test
   public void testExistingPublicWallet()
   {
-    Wallet newWAllet = Wallet.loadFromPublic("044ad5a1a3e2dabd706623fb6ff6e18ee36cfa6637596c7a170b93eac1e53b3470c382b97daa89bca30158ae7ab44455392c2263f81600122b42e0a5bdb4a8a03b");
+    Wallet newWAllet = Wallet.loadFromPublic("04d3bd3d61cd78318e94b141f4fbcab9af875f7eb7dac0e97d7245b3ecdf000282f040d1aef926c6cfa4687847ae03169f06ecddaa7833de668c08c7a91c19d886");
     assertNotNull(newWAllet);
     assertNull(newWAllet.getPrivateKey());
-    assertEquals("044ad5a1a3e2dabd706623fb6ff6e18ee36cfa6637596c7a170b93eac1e53b3470c382b97daa89bca30158ae7ab44455392c2263f81600122b42e0a5bdb4a8a03b", newWAllet.getPublicKey());
-    assertEquals("0x25c3d13B45a91562d7E2582Df7E45A29337D1F23", newWAllet.getAddress());
+    assertEquals("04d3bd3d61cd78318e94b141f4fbcab9af875f7eb7dac0e97d7245b3ecdf000282f040d1aef926c6cfa4687847ae03169f06ecddaa7833de668c08c7a91c19d886", newWAllet.getPublicKey());
+    assertEquals("0x6f5b635F45b745AD2cb5FA42A986259f1A0534DF", newWAllet.getAddress());
   }
 }
