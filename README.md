@@ -4,3 +4,13 @@
 # Ethereum KeyJ
 
 Java library to create Ethereum wallets.
+
+# Usage
+```
+Wallet newWAllet = Wallet.newWallet();
+String address = newWAllet.getAddress();
+String privateKey = newWAllet.getPrivateKey();
+
+//load from existing private key
+Wallet wallet = Wallet.loadFromPrivate("0c276dea6126fc41da8303d13f53fdbf4c5b69c8a0cbe8526a8f56483f1b51e5");
+```
