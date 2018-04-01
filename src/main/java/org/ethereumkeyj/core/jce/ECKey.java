@@ -692,10 +692,10 @@ public class ECKey implements Serializable
     public static boolean validateComponents(BigInteger r, BigInteger s, byte v)
     {
 
-      if(v != 27 && v != 28)
-      {
-        return false;
-      }
+//      if(v != 27 && v != 28)
+//      {
+//        return false;
+//      }
 
       if(BIUtil.isLessThan(r, BigInteger.ONE))
       {
