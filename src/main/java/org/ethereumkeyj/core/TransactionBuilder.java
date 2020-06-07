@@ -26,18 +26,18 @@ import org.bouncycastle.util.encoders.Hex;
 public class TransactionBuilder
 {
 
-  public static Transaction create(Wallet to, BigInteger amountInEth)
+  public static Transaction create(Wallet to, BigInteger amountInWei)
   {
-    return create(to, amountInEth, null, null, Settings.GAS_PRICE, Settings.GAS_LIMIT, Settings.CHAIN_ID);
+    return create(to, amountInWei, null, null, Settings.GAS_PRICE, Settings.GAS_LIMIT, Settings.CHAIN_ID);
   }
 
-  public static Transaction create(Wallet to, BigInteger amountInEth, BigInteger nonce, byte[] data, BigInteger gasPrice, BigInteger gasLimit, int chainId)
+  public static Transaction create(Wallet to, BigInteger amountInWei, BigInteger nonce, byte[] data, BigInteger gasPrice, BigInteger gasLimit, int chainId)
   {
     byte[] nonceRaw = BigIntegers.asUnsignedByteArray(nonce == null ? BigInteger.ZERO : nonce);
     byte[] gasPriceRaw = BigIntegers.asUnsignedByteArray(gasPrice);
     byte[] gasLimitRaw = BigIntegers.asUnsignedByteArray(gasLimit);
     byte[] receiveAddress = Hex.decode(to.getAddress().substring(2));
-    byte[] value = BigIntegers.asUnsignedByteArray(amountInEth.multiply(new BigInteger("1000000000000000000")));
+    byte[] value = BigIntegers.asUnsignedByteArray(amountInWei);
     byte[] dataRaw = data == null ? new byte[0] : data;
 
     return new Transaction(nonceRaw, gasPriceRaw, gasLimitRaw, receiveAddress, value, dataRaw, chainId);

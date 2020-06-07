@@ -36,7 +36,7 @@ public class TestTranaction
     Settings.CHAIN_ID = Settings.ROPSPTEN;
     Wallet toWallet = Wallet.loadFromAddress("0x6f5b635F45b745AD2cb5FA42A986259f1A0534DF");
     
-    Transaction transaction = TransactionBuilder.create(toWallet, BigInteger.ONE);
+    Transaction transaction = TransactionBuilder.create(toWallet, new BigInteger("1000000000000000000"));
     assertTrue(transaction.getNonce().length == 0);
     assertTrue(transaction.getGasPrice().length > 0);
     assertTrue(transaction.getGasLimit().length > 0);
@@ -55,7 +55,7 @@ public class TestTranaction
     Wallet toWallet = Wallet.loadFromAddress("0x718863e4fFC6D9CC4c40ba6ABE6EE5A2ec5a395c");
     //to private: 72529b4ee2cfcf7116ef3bc507c91ed7ced7c8b5fb098d84de2f4c4cdc287b84
     
-    Transaction transaction = TransactionBuilder.create(toWallet, new BigInteger("1"));
+    Transaction transaction = TransactionBuilder.create(toWallet, new BigInteger("1000000000000000000"));
     
     //check before signature
     assertEquals("ec8085012a05f20082520894718863e4ffc6d9cc4c40ba6abe6ee5a2ec5a395c880de0b6b3a764000080038080", 
